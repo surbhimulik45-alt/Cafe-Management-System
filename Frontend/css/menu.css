@@ -1,0 +1,41 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body { background: #f8f5f0; }
+
+.navbar { background: #2c1810 !important; box-shadow: 0 3px 10px rgba(0,0,0,0.25); }
+.navbar-brand { font-size: 26px; font-weight: 700; color: #ffc107 !important; }
+.nav-link { color: #fff !important; transition: 0.3s; font-weight: 500; }
+.nav-link:hover { color: #ffc107 !important; }
+
+.btn-warning { background: linear-gradient(135deg, #ff9800, #e65c00); border: none; color: white; font-weight: 600; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; }
+.btn-warning:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,152,0,0.4); color: white; }
+
+.card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: transform 0.35s, box-shadow 0.35s;
+}
+.card:hover { transform: translateY(-8px); box-shadow: 0 16px 35px rgba(0,0,0,0.15); }
+.card img { height: 200px; object-fit: cover; transition: transform 0.4s; }
+.card:hover img { transform: scale(1.05); }
+
+.food-name { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 4px; }
+.food-description { font-size: 13px; color: #888; }
+.food-price { font-size: 22px; font-weight: 700; color: #2e7d32; }
+
+.card-body ul { list-style: none; padding: 0; font-size: 13px; color: #666; text-align: left; }
+.card-body ul li { padding: 2px 0; display: flex; justify-content: space-between; }
+
+.form-control, .form-select { border-radius: 10px; border: 2px solid #e0e0e0; padding: 10px 14px; transition: border-color 0.3s; }
+.form-control:focus, .form-select:focus { border-color: #ff9800; box-shadow: 0 0 0 3px rgba(255,152,0,0.15); outline: none; }
+
+.alert-success { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: none; border-radius: 12px; font-weight: 500; }
+
+footer { background: #2c1810 !important; color: white; padding: 30px 0; }
+
+@media (max-width: 768px) { .card img { height: 170px; } }

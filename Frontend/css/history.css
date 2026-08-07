@@ -1,0 +1,106 @@
+/* Order History CSS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body { background: #f8f5f0; }
+
+/* Navbar */
+.navbar { background: #2c1810 !important; box-shadow: 0 3px 10px rgba(0,0,0,0.25); }
+.navbar-brand { font-size: 26px; font-weight: 700; color: #ffc107 !important; }
+.nav-link { color: #fff !important; font-weight: 500; transition: 0.3s; }
+.nav-link:hover { color: #ffc107 !important; }
+
+/* Page Header */
+.page-header {
+    background: linear-gradient(135deg, #2c1810 0%, #5d3728 100%);
+    padding: 50px 0 40px;
+    color: white;
+    text-align: center;
+}
+
+.page-header h1 { font-size: 38px; font-weight: 700; }
+.page-header p { font-size: 16px; color: rgba(255,255,255,0.75); margin-top: 8px; }
+
+/* History Cards */
+.history-card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px 26px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-left: 5px solid #ff9800;
+}
+
+.history-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.11);
+}
+
+.history-order-id { font-size: 13px; color: #888; font-weight: 500; }
+.history-title { font-size: 17px; font-weight: 700; color: #2c1810; margin: 4px 0; }
+.history-items { font-size: 14px; color: #666; }
+.history-date { font-size: 13px; color: #aaa; }
+
+/* Amount */
+.history-amount {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-delivered { background: #e8f5e9; color: #2e7d32; }
+.status-pending { background: #fff3e0; color: #e65c00; }
+.status-preparing { background: #e3f2fd; color: #1565c0; }
+.status-cancelled { background: #ffebee; color: #c62828; }
+
+/* Timeline line connector */
+.history-timeline {
+    position: relative;
+    padding-left: 18px;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #ff9800, #e65c00);
+    border-radius: 3px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-state i { font-size: 72px; color: #e0d5c9; margin-bottom: 20px; display: block; }
+.empty-state h4 { color: #5d4037; font-weight: 700; margin-bottom: 10px; }
+.empty-state p { color: #888; }
+
+/* Buttons */
+.btn-warning { background: linear-gradient(135deg, #ff9800, #e65c00); border: none; color: white; font-weight: 600; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; }
+.btn-warning:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,152,0,0.4); color: white; }
+
+/* Footer */
+footer { background: #2c1810 !important; color: white; padding: 25px 0; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header h1 { font-size: 28px; }
+    .history-card { padding: 16px 18px; }
+    .history-amount { font-size: 18px; }
+}

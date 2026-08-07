@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment & Checkout - Cafe Delight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-warning" href="index.html">☕ Cafe Delight</a>
+        <a href="cart.html" class="btn btn-outline-warning btn-sm">← Back to Cart</a>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-dark">💳 Secure Payment</h2>
+        <p class="text-muted">Choose your preferred payment mode to complete your order</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <!-- Payment Options -->
+        <div class="col-lg-6">
+            <div class="card shadow border-0 rounded-4 p-4 mb-4">
+                <h4 class="fw-bold text-dark mb-3">Select Payment Method</h4>
+
+                <div class="form-check payment-option p-3 border rounded-3 mb-2 bg-white cursor-pointer">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="payUPI" value="UPI" checked>
+                    <label class="form-check-label fw-bold d-flex align-items-center justify-content-between w-100 ms-2" for="payUPI">
+                        <span><i class="fa-solid fa-qrcode text-warning me-2"></i> UPI / QR Payment</span>
+                        <span class="badge bg-success">Instant</span>
+                    </label>
+                </div>
+
+                <!-- UPI QR Code View -->
+                <div id="upiSection" class="text-center p-3 my-2 border rounded bg-light">
+                    <p class="small text-muted mb-2">Scan QR Code using Google Pay, PhonePe, or Paytm</p>
+                    <img id="upiQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=cafedelight@upi%26pn=CafeDelight" class="img-thumbnail mb-2" alt="UPI QR">
+                    <div class="text-muted small">UPI ID: <strong>cafedelight@upi</strong></div>
+                </div>
+
+                <div class="form-check payment-option p-3 border rounded-3 mb-2 bg-white cursor-pointer">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="payCard" value="Card">
+                    <label class="form-check-label fw-bold ms-2" for="payCard">
+                        <i class="fa-solid fa-credit-card text-primary me-2"></i> Credit / Debit Card
+                    </label>
+                </div>
+
+                <!-- Card Details View -->
+                <div id="cardSection" class="p-3 my-2 border rounded bg-light" style="display:none;">
+                    <div class="mb-2">
+                        <input type="text" class="form-control form-control-sm" placeholder="Card Number (16 digits)">
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control form-control-sm" placeholder="MM/YY">
+                        </div>
+                        <div class="col-6">
+                            <input type="password" class="form-control form-control-sm" placeholder="CVV">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-check payment-option p-3 border rounded-3 mb-2 bg-white cursor-pointer">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="payCash" value="Cash">
+                    <label class="form-check-label fw-bold ms-2" for="payCash">
+                        <i class="fa-solid fa-money-bill-wave text-success me-2"></i> Cash on Delivery / Counter
+                    </label>
+                </div>
+
+                <button id="payNowBtn" class="btn btn-warning btn-lg w-100 fw-bold shadow mt-3">
+                    Pay <span id="payAmountBtn">₹0</span> & Place Order
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="card shadow border-0 rounded-4 p-4">
+                <h4 class="fw-bold text-dark mb-3">Order Details</h4>
+                <div id="orderItemsSummary" class="mb-3" style="max-height: 250px; overflow-y: auto;">
+                    <!-- Items summary -->
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between fs-5 fw-bold text-dark">
+                    <span>Total Amount:</span>
+                    <span id="paymentTotalAmount" class="text-success">₹0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/payment.js"></script>
+</body>
+</html>

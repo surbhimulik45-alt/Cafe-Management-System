@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Cafe Delight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .step-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin: 0 auto 8px;
+            background-color: #e9ecef;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .step-active {
+            background-color: #ffc107;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 0 12px rgba(255, 193, 7, 0.6);
+            transform: scale(1.1);
+            border-color: #ffc107;
+        }
+        .step-completed {
+            background-color: #198754;
+            color: #fff;
+            border-color: #198754;
+        }
+        .extra-small {
+            font-size: 0.72rem;
+            color: #495057;
+            font-weight: 600;
+        }
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-warning" href="index.html">☕ Cafe Delight</a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="menu.html" class="nav-link text-white">Menu</a>
+            <a href="history.html" class="btn btn-outline-warning btn-sm">Order History</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark">🛵 Live Order Tracking</h2>
+        <p class="text-muted">Track your food preparation and delivery in real-time</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                    <div>
+                        <h5 class="fw-bold mb-0" id="trackOrderId">Order #---</h5>
+                        <span class="badge bg-warning text-dark mt-1" id="trackStatusBadge">Preparing</span>
+                    </div>
+                    <div class="text-end">
+                        <div class="small text-muted">Estimated Delivery</div>
+                        <h5 class="fw-bold text-success mb-0" id="trackEta">25 Mins</h5>
+                    </div>
+                </div>
+
+                <!-- Stepper Progress (7-Stage Timeline) -->
+                <div class="d-flex justify-content-between align-items-center my-4 position-relative px-1 flex-wrap flex-md-nowrap gap-2">
+                    <div class="text-center flex-fill">
+                        <div id="step1" class="step-icon step-completed">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Order Placed</div>
+                    </div>
+                    <div class="text-center flex-fill">
+                        <div id="step2" class="step-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Confirmed</div>
+                    </div>
+                    <div class="text-center flex-fill">
+                        <div id="step3" class="step-icon">
+                            <i class="fa-solid fa-mortar-pestle"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Preparing</div>
+                    </div>
+                    <div class="text-center flex-fill">
+                        <div id="step4" class="step-icon">
+                            <i class="fa-solid fa-fire-burner"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Cooking</div>
+                    </div>
+                    <div class="text-center flex-fill">
+                        <div id="step5" class="step-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Ready</div>
+                    </div>
+                    <div class="text-center flex-fill">
+                        <div id="step6" class="step-icon">
+                            <i class="fa-solid fa-bell-concierge"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Serving</div>
+                    </div>
+                    <div class="text-center flex-fill">
+                        <div id="step7" class="step-icon">
+                            <i class="fa-solid fa-house-chimney-check"></i>
+                        </div>
+                        <div class="fw-bold extra-small">Delivered</div>
+                    </div>
+                </div>
+
+                <!-- Chef Live Progress Card -->
+                <div id="chefProgressCard" class="card bg-warning bg-opacity-10 border-warning border-start border-4 rounded-3 p-3 my-4 d-none">
+                    <div class="d-flex align-items-center">
+                        <div class="p-2 bg-warning rounded text-dark me-3 animate-bounce-slow">
+                            <i class="fa-solid fa-kitchen-set fa-2x"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1" id="chefNameLabel">🍳 Chef Progress Tracker</h6>
+                            <p class="mb-0 small text-muted" id="chefActionLabel">Waiting to confirm your order details...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cancel Order Option -->
+                <div id="cancelOrderWrapper" class="text-center my-3 d-none">
+                    <button id="cancelOrderBtn" class="btn btn-outline-danger btn-sm px-4 fw-bold">
+                        <i class="fa-solid fa-ban me-1"></i> Request Order Cancellation
+                    </button>
+                    <p class="text-muted small mt-2 mb-0">Note: You can only cancel an order before the kitchen begins preparation.</p>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- Details & Delivery info -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-dark">Delivery Address / Seat</h6>
+                        <p class="text-muted small mb-0" id="deliveryAddressText">
+                            Table #7 / Delivery Address<br>
+                            Cafe Delight Main Hall
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <button id="refreshStatusBtn" class="btn btn-outline-dark btn-sm">
+                            <i class="fa-solid fa-rotate me-1"></i> Refresh Live Status
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/tracking.js"></script>
+</body>
+</html>

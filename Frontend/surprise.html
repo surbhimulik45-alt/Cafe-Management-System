@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Me! - Cafe Delight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/surprise.css">
+</head>
+<body class="surprise-theme text-white">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-75 sticky-top backdrop-blur">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-warning" href="index.html">☕ Cafe Delight</a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="menu.html" class="nav-link text-white">Menu</a>
+            <a href="cart.html" class="btn btn-warning position-relative btn-sm">
+                <i class="fa-solid fa-cart-shopping"></i> Cart
+                <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">0</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="text-center mb-5 fade-in">
+        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider mb-2">Feeling Lucky?</span>
+        <h1 class="display-4 fw-extrabold text-gradient">🎲 Surprise Me Mode</h1>
+        <p class="text-light text-opacity-75 max-w-600 mx-auto">Can't decide what to eat? Set your budget and choices, and let the chef choose a single item or combo just for you!</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <!-- Form Options Card -->
+        <div class="col-lg-5 col-md-8">
+            <div class="glass-card p-4 p-md-5 rounded-4 shadow-2xl fade-in-left">
+                <h4 class="fw-bold mb-4 text-warning"><i class="fa-solid fa-sliders me-2"></i>Preferences</h4>
+                
+                <form id="surpriseForm">
+                    <!-- Budget Slider -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <label class="form-label fw-semibold mb-0">Max Budget</label>
+                            <span class="text-warning fw-bold fs-5" id="budgetValue">₹350</span>
+                        </div>
+                        <input type="range" class="form-range custom-range" id="surpriseBudget" min="100" max="600" step="10" value="350">
+                        <div class="d-flex justify-content-between small text-white-50 mt-1">
+                            <span>₹100</span>
+                            <span>₹350</span>
+                            <span>₹600</span>
+                        </div>
+                    </div>
+
+                    <!-- Veg/Non-Veg -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold mb-2">Food Type</label>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <input type="radio" class="btn-check" name="foodPref" id="prefVeg" value="Veg" checked>
+                                <label class="btn btn-outline-glass w-100 py-2 fw-semibold" for="prefVeg">
+                                    🟢 Veg
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="radio" class="btn-check" name="foodPref" id="prefNonVeg" value="Non-Veg">
+                                <label class="btn btn-outline-glass w-100 py-2 fw-semibold" for="prefNonVeg">
+                                    🔴 Non-Veg
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="radio" class="btn-check" name="foodPref" id="prefAny" value="Any">
+                                <label class="btn btn-outline-glass w-100 py-2 fw-semibold" for="prefAny">
+                                    🍲 Any
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Selector -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold mb-2">Category</label>
+                        <select id="surpriseCategory" class="form-select custom-select">
+                            <option value="Any" selected>Any Categories</option>
+                            <option value="Burgers">Burgers</option>
+                            <option value="Sandwich">Sandwiches</option>
+                            <option value="Mojitos">Mojitos</option>
+                            <option value="Shakes">Shakes</option>
+                            <option value="Pasta">Pasta</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="Coffee">Coffee</option>
+                            <option value="Lite Bites">Lite Bites</option>
+                        </select>
+                    </div>
+
+                    <!-- Spice Level Selection -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold mb-2">Spice Tolerance</label>
+                        <div class="d-flex justify-content-between gap-2">
+                            <input type="radio" class="btn-check" name="spiceLevel" id="spiceMild" value="Mild" checked>
+                            <label class="btn btn-outline-glass flex-fill py-2 text-center" for="spiceMild">
+                                🌶️ <span class="d-block small mt-1">Mild</span>
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="spiceLevel" id="spiceMedium" value="Medium">
+                            <label class="btn btn-outline-glass flex-fill py-2 text-center" for="spiceMedium">
+                                🌶️🌶️ <span class="d-block small mt-1">Medium</span>
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="spiceLevel" id="spiceSpicy" value="Spicy">
+                            <label class="btn btn-outline-glass flex-fill py-2 text-center" for="spiceSpicy">
+                                🌶️🌶️🌶️ <span class="d-block small mt-1">Spicy</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning btn-glow btn-lg w-100 fw-bold mt-2 py-3 rounded-3" id="rollBtn">
+                        <i class="fa-solid fa-dice-d20 fa-spin-hover me-2 fs-5"></i> Generate Surprise
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Result Box Card -->
+        <div class="col-lg-6 col-md-8">
+            <div class="glass-card p-4 p-md-5 rounded-4 shadow-2xl h-100 d-flex flex-column justify-content-center text-center position-relative overflow-hidden fade-in-right" id="resultCard">
+                <!-- Idle State -->
+                <div id="resultStateIdle" class="py-5">
+                    <div class="floating-dice mb-4 text-warning opacity-75">
+                        <i class="fa-solid fa-dice fa-6x"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">Your Feast Awaits!</h3>
+                    <p class="text-white-50">Select your budget and taste options on the left, then click roll to generate a personalized culinary surprise.</p>
+                </div>
+
+                <!-- Rolling State -->
+                <div id="resultStateRolling" class="py-5 d-none">
+                    <div class="spinner-cube mb-4 mx-auto">
+                        <i class="fa-solid fa-dice-d6 fa-spin fa-5x text-warning"></i>
+                    </div>
+                    <h3 class="fw-bold animate-pulse text-warning">Consulting the Recipe Book...</h3>
+                    <div class="rolling-items-ticker mt-3 bg-dark bg-opacity-50 p-2 rounded border border-secondary" id="rollingTicker">
+                        Watermelon Mojito
+                    </div>
+                </div>
+
+                <!-- Complete State -->
+                <div id="resultStateDone" class="d-none text-start">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold text-warning mb-0"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Chef's Recommendation</h4>
+                        <span class="badge bg-success px-3 py-2 rounded-pill fw-bold" id="resultTotalLabel">Total: ₹0</span>
+                    </div>
+
+                    <h2 class="fw-extrabold mb-3 text-gradient-green" id="surpriseComboTitle">Personalized Combo</h2>
+                    
+                    <!-- Food items container -->
+                    <div class="d-flex flex-column gap-3 mb-4" id="comboItemsContainer">
+                        <!-- Items rendered here -->
+                    </div>
+
+                    <!-- Explanatory message -->
+                    <div class="bg-dark bg-opacity-50 border border-secondary rounded-3 p-3 mb-4">
+                        <h6 class="fw-bold text-warning mb-1"><i class="fa-solid fa-circle-info me-2"></i>Why this fits:</h6>
+                        <p class="text-white-50 small mb-0" id="comboReason"></p>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-success btn-lg w-100 fw-bold py-3" id="orderSurpriseBtn">
+                                <i class="fa-solid fa-cart-arrow-down me-1"></i> Order Now
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-light btn-lg w-100 fw-bold py-3" id="favSurpriseBtn">
+                                <i class="fa-regular fa-heart me-1"></i> Favorite Combo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/surprise.js"></script>
+</body>
+</html>

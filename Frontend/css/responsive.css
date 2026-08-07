@@ -1,0 +1,123 @@
+/* Global Responsive CSS */
+/* This file handles cross-page responsive behaviour for all pages */
+
+@media (max-width: 1200px) {
+    .container { padding-left: 20px; padding-right: 20px; }
+}
+
+/* ─── Tablet (max 992px) ─── */
+@media (max-width: 992px) {
+
+    /* Navbar */
+    .navbar-collapse { background: #2c1810; padding: 16px 20px; border-radius: 12px; margin-top: 8px; }
+
+    /* Hero / Banner */
+    .hero, .page-header { text-align: center; }
+    .hero h1 { font-size: 40px; }
+    .hero p { font-size: 17px; }
+    .hero img { margin-top: 40px; max-width: 380px; }
+
+    /* Sidebar (admin) */
+    .sidebar { min-height: auto; }
+
+    /* Cards Grid */
+    .card img { height: 180px; }
+    .fav-card img { height: 180px; }
+    .nutrition-card img { height: 170px; }
+    .ar-card img { height: 180px; }
+
+    /* Stepper */
+    .step-label { font-size: 11px; }
+}
+
+/* ─── Small Tablet / Large Phone (max 768px) ─── */
+@media (max-width: 768px) {
+
+    /* Typography */
+    h1 { font-size: 30px !important; }
+    h2 { font-size: 26px !important; }
+    h3 { font-size: 22px !important; }
+
+    /* Hero */
+    .hero { padding-top: 110px; padding-bottom: 60px; }
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 16px; }
+    .hero img { width: 90%; max-width: 100%; }
+
+    /* Navbar Brand */
+    .navbar-brand { font-size: 22px !important; }
+
+    /* Cards */
+    .card img { height: 170px; }
+    .menu-card img { height: 160px; }
+
+    /* Cart Table — convert to block on mobile */
+    .cart-table thead { display: none; }
+    .cart-table tbody tr { display: block; border: 1px solid #f0ebe5; border-radius: 12px; margin-bottom: 14px; padding: 12px 16px; }
+    .cart-table td { display: flex; justify-content: space-between; padding: 6px 0; border: none; }
+    .cart-table td::before { content: attr(data-label); font-weight: 600; color: #555; }
+
+    /* Admin Stat Cards */
+    .stat-card { margin-bottom: 16px; }
+    .admin-content { padding: 14px; }
+
+    /* Tracking Stepper — vertical layout */
+    .stepper { flex-direction: column; align-items: flex-start; gap: 22px; padding-left: 24px; }
+    .stepper::before { left: 0; top: 0; bottom: 0; width: 4px; height: auto; right: auto; }
+    .stepper-progress { left: 0; top: 0; width: 4px; height: 100%; }
+    .step { flex-direction: row; gap: 14px; }
+    .step-label { text-align: left; max-width: none; }
+
+    /* History Card */
+    .history-card { padding: 16px 18px; }
+
+    /* Section spacing */
+    section { padding: 50px 0; }
+
+    /* AR Grid */
+    .ar-card img { height: 160px; }
+
+    /* Nutrition bars */
+    .nutrition-card-body { padding: 14px; }
+}
+
+/* ─── Small Phone (max 576px) ─── */
+@media (max-width: 576px) {
+
+    /* Hero */
+    .hero h1 { font-size: 26px !important; }
+    .hero p { font-size: 15px; }
+
+    /* Page Header */
+    .page-header h1 { font-size: 24px !important; }
+    .page-header p { font-size: 14px; }
+
+    /* Login / Register Box */
+    .login-box, .register-box { padding: 28px 18px; margin: 14px; border-radius: 16px; }
+
+    /* Buttons stacked */
+    .btn { margin-bottom: 8px; }
+    .d-flex.gap-2 { flex-direction: column; }
+
+    /* Summary Card Full Width */
+    .summary-card { margin-top: 20px; }
+
+    /* Stat numbers */
+    .stat-number { font-size: 24px; }
+
+    /* Admin table horizontal scroll */
+    .table-responsive { overflow-x: auto; }
+
+    /* Average Rating */
+    .avg-rating { font-size: 48px; }
+
+    /* ETA */
+    .eta-card .eta-time { font-size: 28px; }
+
+    /* AR Modal */
+    .ar-modal { padding: 24px 18px; }
+    .ar-modal img { max-height: 200px; }
+
+    /* Footer */
+    footer { padding: 20px 0; text-align: center; }
+}

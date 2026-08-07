@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { background: #f8f5f0; }
+.navbar { background: #2c1810 !important; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+.navbar-brand { font-size: 26px; font-weight: 700; color: #ffc107 !important; }
+.nav-link { color: #fff !important; font-weight: 500; transition: 0.3s; }
+.nav-link:hover { color: #ffc107 !important; }
+.offer-card { border: none; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+.offer-card:hover { transform: translateY(-10px); box-shadow: 0 18px 40px rgba(0,0,0,0.18); }
+.offer-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(135deg, #e53935, #b71c1c); color: white; border-radius: 20px; padding: 4px 12px; font-weight: 700; font-size: 13px; }
+.offer-header { background: linear-gradient(135deg, #ff9800, #e65c00); color: white; padding: 30px 20px; text-align: center; }
+.offer-header i { font-size: 36px; margin-bottom: 8px; }
+.offer-header h5 { font-weight: 700; font-size: 18px; }
+.btn-warning { background: linear-gradient(135deg, #ff9800, #e65c00); border: none; color: white; font-weight: 600; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; }
+.btn-warning:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,152,0,0.4); color: white; }
+footer { background: #2c1810 !important; color: white; padding: 25px 0; }
