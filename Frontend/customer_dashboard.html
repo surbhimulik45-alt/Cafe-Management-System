@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Cafe Delight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        /* Section visibility */
+        .tab-section { display: none; }
+        .tab-section.active { display: block; }
+
+        /* Loyalty Points card */
+        .loyalty-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#c8a96e 0% 60%, #e9ecef 60% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .loyalty-ring-inner {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* reward item */
+        .reward-item {
+            background: #f8f9fa;
+            border-left: 4px solid #c8a96e;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Quick Action buttons */
+        .quick-action-card {
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            text-decoration: none;
+            color: #1e293b;
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+        .quick-action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            color: #1e293b;
+        }
+        .quick-action-card .qa-icon { 
+            font-size: 2rem; 
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+
+        /* Sidebar section labels */
+        .sidebar-section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #6b7280;
+            padding: 0.75rem 2rem 0.25rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 70px; }
+            .sidebar-header span, .sidebar-menu .nav-link span,
+            .sidebar-section-label, .sidebar-footer .btn-text { display: none; }
+            .sidebar-header { justify-content: center; padding: 1rem 0.5rem; }
+            .sidebar-menu .nav-link { justify-content: center; padding: 0.8rem; }
+            .sidebar-menu .nav-link i { width: auto; }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <span style="font-size:1.4rem;">☕</span>
+            <span style="color:white; font-size:1rem; font-weight:700;">Cafe <span style="color:#d4b896;">Delight</span></span>
+        </div>
+
+        <p class="sidebar-section-label">MAIN</p>
+        <ul class="sidebar-menu">
+            <li class="nav-item">
+                <button class="nav-link active" data-tab="tab-overview">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Overview</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-tab="tab-orders">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>My Orders</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-tab="tab-bookings">
+                    <i class="fa-solid fa-chair"></i>
+                    <span>Table Bookings</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-tab="tab-profile">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile Settings</span>
+                </button>
+            </li>
+        </ul>
+
+        <p class="sidebar-section-label">QUICK LINKS</p>
+        <ul class="sidebar-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="menu.html">
+                    <i class="fa-solid fa-burger"></i>
+                    <span>Order Food</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="booking.html">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Book a Table</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="surprise.html">
+                    <i class="fa-solid fa-dice"></i>
+                    <span>Surprise Me</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="history.html">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Order History</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <button onclick="logoutUser()" class="btn w-100" style="border-radius:10px; color:#9ca3af; border:1px solid rgba(255,255,255,0.1);">
+                <i class="fa-solid fa-right-from-bracket me-1"></i> <span class="btn-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main class="main-content">
+
+        <!-- ============ ENHANCED TOPBAR ============ -->
+        <!-- Welcome Banner -->
+        <div class="dash-welcome-banner">
+            <div class="banner-left">
+                <span class="banner-greeting" id="greetingText">☀️ Good Morning</span>
+                <span class="banner-divider">|</span>
+                <span class="banner-clock" id="liveClock">00:00 AM</span>
+            </div>
+            <div class="banner-nav-pills">
+                <a href="index.html" class="banner-pill"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="menu.html" class="banner-pill"><i class="fa-solid fa-utensils"></i> Menu</a>
+                <a href="booking.html" class="banner-pill"><i class="fa-solid fa-calendar"></i> Book Table</a>
+                <a href="surprise.html" class="banner-pill"><i class="fa-solid fa-dice"></i> Surprise Me</a>
+                <a href="offers.html" class="banner-pill"><i class="fa-solid fa-tags"></i> Offers</a>
+                <a href="reviews.html" class="banner-pill"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a href="nutrition.html" class="banner-pill"><i class="fa-solid fa-leaf"></i> Nutrition</a>
+            </div>
+        </div>
+
+        <!-- Main Topbar -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <i class="fa-solid fa-chart-pie" style="color:#c8a96e;"></i>
+                <span id="topbarTitle">Overview</span>
+            </div>
+            <div class="topbar-actions">
+                <!-- Search -->
+                <div class="topbar-search">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Search..." id="dashSearch">
+                </div>
+                <!-- Notification Bell -->
+                <button class="topbar-icon-btn" id="notifBtn" title="Notifications">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="topbar-badge" id="notifBadge">3</span>
+                </button>
+                <!-- Cart -->
+                <a href="cart.html" class="topbar-icon-btn" title="Cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="topbar-badge" id="cartBadge" style="display:none;">0</span>
+                </a>
+                <!-- Divider -->
+                <div class="topbar-divider"></div>
+                <!-- User Info -->
+                <div class="text-end">
+                    <div class="fw-bold small" style="color:#343a40;" id="userNameDisplay">Welcome!</div>
+                    <div class="text-muted" style="font-size:0.75rem;" id="userEmailDisplay">customer@cafe.com</div>
+                </div>
+                <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=c8a96e&color=fff&rounded=true" width="38" height="38" class="rounded-circle" style="border:2px solid #c8a96e;" alt="Avatar">
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <!-- ========== OVERVIEW TAB ========== -->
+            <div class="tab-section active" id="tab-overview">
+
+                <!-- Customer Hero & Stats row -->
+                <div class="row g-4 mb-4">
+                    <!-- Membership Card -->
+                    <div class="col-lg-6">
+                        <div class="membership-card p-4 rounded-4 text-white position-relative overflow-hidden h-100 d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #1e1e2d 0%, #111118 100%); box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.05);">
+                            <!-- decorative background elements -->
+                            <div class="position-absolute" style="top: -40px; right: -20px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(200, 169, 110, 0.25) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; pointer-events: none;"></div>
+                            <div class="position-absolute" style="bottom: -20px; left: -20px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; pointer-events: none;"></div>
+                            
+                            <div class="d-flex justify-content-between align-items-center position-relative z-1">
+                                <h5 class="mb-0 fw-bold d-flex align-items-center" style="color: #c8a96e; font-family: 'Inter', sans-serif;">
+                                    <i class="fa-solid fa-crown me-2"></i> Gold Member
+                                </h5>
+                                <span class="badge" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 6px 12px; font-weight: 600; letter-spacing: 0.5px;">Cafe Delight</span>
+                            </div>
+                            
+                            <div class="mt-4 mb-2 position-relative z-1">
+                                <p class="text-white-50 mb-1" style="font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600;">LOYALTY BALANCE</p>
+                                <div class="d-flex align-items-baseline gap-2">
+                                    <h1 class="mb-0 fw-bold" id="loyaltyPointsDisplay" style="font-size: 3.5rem; line-height: 1; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">0</h1>
+                                    <span class="text-white-50 fw-semibold" style="font-size: 1.1rem;">pts</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 d-flex justify-content-between align-items-end position-relative z-1">
+                                <div>
+                                    <p class="text-white-50 mb-1" style="font-size: 0.7rem; letter-spacing: 1px;">MEMBER SINCE</p>
+                                    <p class="mb-0 fw-bold" style="letter-spacing: 1px;">2026</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px);"></div>
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); margin-left: -15px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Key Stats -->
+                    <div class="col-lg-6">
+                        <div class="row g-3 h-100">
+                            <!-- Total Orders -->
+                            <div class="col-6">
+                                <div class="glass-card h-100 d-flex flex-column justify-content-center p-4 rounded-4" style="background: #ffffff; border: 1px solid #f1f5f9; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: transform 0.3s ease;">
+                                    <div class="icon-shape bg-primary bg-opacity-10 mb-3 rounded-circle" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #3b82f6;">
+                                        <i class="fa-solid fa-bag-shopping"></i>
+                                    </div>
+                                    <h2 class="fw-bold mb-1" id="totalOrdersDisplay" style="color: #1e293b;">0</h2>
+                                    <p class="text-muted small fw-semibold mb-0 text-uppercase" style="letter-spacing: 0.5px;">Total Orders</p>
+                                </div>
+                            </div>
+                            <!-- Reservations -->
+                            <div class="col-6">
+                                <div class="glass-card h-100 d-flex flex-column justify-content-center p-4 rounded-4" style="background: #ffffff; border: 1px solid #f1f5f9; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: transform 0.3s ease;">
+                                    <div class="icon-shape bg-success bg-opacity-10 mb-3 rounded-circle" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #10b981;">
+                                        <i class="fa-solid fa-chair"></i>
+                                    </div>
+                                    <h2 class="fw-bold mb-1" id="totalBookingsDisplay" style="color: #1e293b;">0</h2>
+                                    <p class="text-muted small fw-semibold mb-0 text-uppercase" style="letter-spacing: 0.5px;">Reservations</p>
+                                </div>
+                            </div>
+                            <!-- Rewards Bar -->
+                            <div class="col-12">
+                                <div class="glass-card d-flex align-items-center justify-content-between p-3 px-4 rounded-4" style="background: linear-gradient(to right, #fffdf8, #ffffff); border: 1px solid #fde68a; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.05);">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="icon-shape rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; box-shadow: 0 4px 10px rgba(245,158,11,0.3);">
+                                            <i class="fa-solid fa-gift"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-muted small fw-semibold mb-0 text-uppercase" style="letter-spacing: 0.5px;">Available Rewards</p>
+                                            <h4 class="fw-bold mb-0" id="totalRewardsDisplay" style="color: #1e293b;">0</h4>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-muted opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="mb-4 mt-2">
+                    <h5 class="fw-bold mb-3" style="color: #1e293b; letter-spacing: -0.5px;">
+                        Quick Actions
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <a href="menu.html" class="quick-action-card">
+                                <div class="qa-icon" style="background: linear-gradient(135deg, rgba(200, 169, 110, 0.15), rgba(200, 169, 110, 0.3)); color: #c8a96e;">
+                                    <i class="fa-solid fa-burger"></i>
+                                </div>
+                                <span style="letter-spacing: 0.2px;">Order Food</span>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a href="booking.html" class="quick-action-card">
+                                <div class="qa-icon" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.3)); color: #10b981;">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                </div>
+                                <span style="letter-spacing: 0.2px;">Book a Table</span>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a href="surprise.html" class="quick-action-card">
+                                <div class="qa-icon" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.3)); color: #f59e0b;">
+                                    <i class="fa-solid fa-dice"></i>
+                                </div>
+                                <span style="letter-spacing: 0.2px;">Surprise Me!</span>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a href="offers.html" class="quick-action-card">
+                                <div class="qa-icon" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.3)); color: #3b82f6;">
+                                    <i class="fa-solid fa-tag"></i>
+                                </div>
+                                <span style="letter-spacing: 0.2px;">View Offers</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rewards & Recent Orders -->
+                <div class="row g-4">
+                    <div class="col-md-5">
+                        <div class="dashboard-table-container h-100">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-gift me-2" style="color:#c8a96e;"></i> My Rewards</h5>
+                            <div id="rewardsList">
+                                <p class="text-muted small">Loading rewards...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="dashboard-table-container h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left me-2 text-muted"></i> Recent Orders</h5>
+                                <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="switchTab('tab-orders')">View All</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-muted small fw-semibold">ID</th>
+                                            <th class="text-muted small fw-semibold">ITEMS</th>
+                                            <th class="text-muted small fw-semibold">TOTAL</th>
+                                            <th class="text-muted small fw-semibold">STATUS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="overviewRecentOrders">
+                                        <tr><td colspan="4" class="text-center text-muted py-4">Loading...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MY ORDERS TAB ========== -->
+            <div class="tab-section" id="tab-orders">
+                <div class="dashboard-table-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0"><i class="fa-solid fa-receipt me-2" style="color:#c8a96e;"></i> My Orders</h5>
+                        <a href="history.html" class="btn btn-sm btn-outline-secondary rounded-pill">Full History</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead style="background:#f9fafb;">
+                                <tr>
+                                    <th class="text-muted small fw-semibold">ORDER ID</th>
+                                    <th class="text-muted small fw-semibold">DATE</th>
+                                    <th class="text-muted small fw-semibold">ITEMS</th>
+                                    <th class="text-muted small fw-semibold">TOTAL</th>
+                                    <th class="text-muted small fw-semibold">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardOrdersTable">
+                                <tr><td colspan="5" class="text-center py-4">Loading orders...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== TABLE BOOKINGS TAB ========== -->
+            <div class="tab-section" id="tab-bookings">
+                <div class="dashboard-table-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0"><i class="fa-solid fa-chair me-2 text-success"></i> My Reservations</h5>
+                        <a href="booking.html" class="btn action-btn action-green btn-sm">
+                            <i class="fa-solid fa-plus me-1"></i> New Booking
+                        </a>
+                    </div>
+                    <div class="row g-3" id="dashboardBookingsList">
+                        <div class="col-12 text-center py-4 text-muted">Loading bookings...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== PROFILE TAB ========== -->
+            <div class="tab-section" id="tab-profile">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="dashboard-table-container text-center">
+                            <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=6f42c1&color=fff&rounded=true&size=100" width="100" class="rounded-circle mb-3 shadow" alt="Avatar">
+                            <h5 class="fw-bold mb-1" id="profileNameDisplay">User</h5>
+                            <p class="text-muted small" id="profileEmailDisplay">email@example.com</p>
+                            <span class="badge rounded-pill" style="background:#c8a96e; font-size:0.85rem;" id="profileRoleBadge">Customer</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="dashboard-table-container">
+                            <h5 class="fw-bold mb-4"><i class="fa-solid fa-user-edit me-2" style="color:#c8a96e;"></i> Profile Information</h5>
+                            <form id="profileForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small text-muted">FULL NAME</label>
+                                        <input type="text" class="form-control rounded-3" id="profileName" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small text-muted">EMAIL ADDRESS</label>
+                                        <input type="email" class="form-control rounded-3" id="profileEmail" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small text-muted">PHONE NUMBER</label>
+                                        <input type="tel" class="form-control rounded-3" id="profilePhone" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small text-muted">ACCOUNT ROLE</label>
+                                        <input type="text" class="form-control rounded-3 bg-light" id="profileRole" readonly disabled>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <div class="p-3 rounded-3" style="background:#fdf0d5;">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="icon-shape bg-purple-light">
+                                                    <i class="fa-solid fa-crown"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold" style="color:#c8a96e;">Loyalty Points</div>
+                                                    <div class="display-6 fw-bold" id="profileLoyaltyPoints">0</div>
+                                                    <div class="text-muted small">Points earn with every order!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /page-content -->
+    </main>
+
+</div><!-- /dashboard-layout -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/customer_dashboard.js"></script>
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-menu .nav-link').forEach(l => l.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        const link = document.querySelector(`.nav-link[data-tab="${tabId}"]`);
+        if (link) link.classList.add('active');
+        const titles = {
+            'tab-overview': 'Overview',
+            'tab-orders': 'My Orders',
+            'tab-bookings': 'Table Bookings',
+            'tab-profile': 'Profile Settings'
+        };
+        document.getElementById('topbarTitle').textContent = titles[tabId] || 'Dashboard';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.sidebar-menu .nav-link[data-tab]').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        // Live Clock & Greeting
+        function updateClockAndGreeting() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            const h12 = h % 12 || 12;
+            document.getElementById('liveClock').textContent = `${h12}:${m} ${ampm}`;
+
+            let emoji, label;
+            if (h < 12) { emoji = '☀️'; label = 'Good Morning'; }
+            else if (h < 17) { emoji = '🌤️'; label = 'Good Afternoon'; }
+            else { emoji = '🌙'; label = 'Good Evening'; }
+            const user = getCurrentUser ? getCurrentUser() : null;
+            const name = user && user.name ? ', ' + user.name.split(' ')[0] : '';
+            document.getElementById('greetingText').textContent = `${emoji} ${label}${name}`;
+        }
+        updateClockAndGreeting();
+        setInterval(updateClockAndGreeting, 30000);
+    });
+</script>
+</body>
+</html>

@@ -105,16 +105,28 @@ function updateNavbarSession() {
     const isExplicitLogin = localStorage.getItem('cafe_user') !== null;
     const isAdmin = isExplicitLogin && user && user.role === 'Admin';
 
-    // Dynamic Admin option visibility: hide for clients/guests, show for admins
-    const adminNavElements = document.querySelectorAll('a[href="admin.html"], a[href="./admin.html"], #navAdminItem, .admin-only');
-    adminNavElements.forEach(el => {
-        const parentLi = el.closest('li');
-        const target = parentLi || el;
-        if (isAdmin) {
-            target.style.display = '';
+    // Dynamic Dashboard visibility and routing
+    const dashboardItem = document.getElementById('navDashboardItem');
+    const dashboardLink = document.getElementById('navDashboardLink');
+    if (dashboardItem && dashboardLink) {
+        if (isExplicitLogin && user) {
+            dashboardItem.style.display = 'block';
+            if (isAdmin) {
+                dashboardLink.href = 'admin.html';
+                dashboardLink.innerHTML = '<i class="fa-solid fa-gauge"></i> Admin Panel';
+            } else {
+                dashboardLink.href = 'customer_dashboard.html';
+                dashboardLink.innerHTML = '<i class="fa-solid fa-gauge"></i> Dashboard';
+            }
         } else {
-            target.style.display = 'none';
+            dashboardItem.style.display = 'none';
         }
+    }
+    
+    // Also handle legacy admin links if they exist on other pages
+    const legacyAdminLinks = document.querySelectorAll('#navAdminItem');
+    legacyAdminLinks.forEach(el => {
+        el.style.display = isAdmin ? 'block' : 'none';
     });
 
     // Update login / logout state button in navbar if available

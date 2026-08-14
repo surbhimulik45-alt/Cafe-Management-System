@@ -69,10 +69,58 @@ async function loadAdminSummary() {
         document.getElementById("statOrders").textContent = orders.length || summary?.total_orders || 120;
         document.getElementById("statBookings").textContent = bookings.length || summary?.total_bookings || 18;
         document.getElementById("statUsers").textContent = users.length || summary?.total_users || 25;
+
+        // Revenue: sum of all orders
+        const revenue = orders.reduce((sum, o) => sum + (parseFloat(o.total_price) || 0), 0);
+        const statRevenue = document.getElementById("statRevenue");
+        if (statRevenue) statRevenue.textContent = `₹${revenue.toLocaleString('en-IN')}`;
+
+        // Reviews count
+        const reviews = await apiCall('/reviews/').catch(() => []);
+        const statReviews = document.getElementById("statReviews");
+        if (statReviews) statReviews.textContent = reviews.length || summary?.total_reviews || 0;
+
+        // Pending orders badge for sidebar
+        const pendingCount = orders.filter(o => o.status === 'Pending').length;
+        const badge = document.getElementById("pendingOrdersBadge");
+        if (badge) {
+            badge.textContent = pendingCount;
+            badge.style.display = pendingCount > 0 ? 'inline-block' : 'none';
+        }
+
+        // Overview recent orders table (top 5)
+        const overviewTable = document.getElementById("overviewOrdersTable");
+        if (overviewTable) {
+            if (orders.length === 0) {
+                overviewTable.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">No orders yet.</td></tr>`;
+            } else {
+                const statusStyle = {
+                    'Pending': 'background:#fff3cd;color:#856404;',
+                    'Preparing': 'background:#cff4fc;color:#055160;',
+                    'Ready': 'background:#cfe2ff;color:#084298;',
+                    'Delivered': 'background:#d1e7dd;color:#0a3622;',
+                    'Completed': 'background:#d1e7dd;color:#0a3622;',
+                    'Cancelled': 'background:#f8d7da;color:#842029;',
+                };
+                overviewTable.innerHTML = orders.slice(-5).reverse().map(o => {
+                    const style = statusStyle[o.status] || 'background:#e9ecef;color:#495057;';
+                    const items = Array.isArray(o.items) ? o.items.map(i => typeof i === 'object' ? i.name : i).join(', ') : (o.items || 'N/A');
+                    const itemsTrimmed = items.length > 30 ? items.substring(0, 27) + '...' : items;
+                    return `<tr>
+                        <td class="fw-bold text-muted">#${o.id}</td>
+                        <td>${o.customer_name || 'Guest'}</td>
+                        <td><small>${itemsTrimmed}</small></td>
+                        <td class="fw-bold" style="color:#16a34a;">₹${o.total_price || 0}</td>
+                        <td><span class="badge" style="${style}">${o.status || 'Pending'}</span></td>
+                    </tr>`;
+                }).join('');
+            }
+        }
     } catch (e) {
         console.warn("Error loading admin summary stats", e);
     }
 }
+
 
 async function loadAdminMenu() {
     const table = document.getElementById("adminMenuTable");
