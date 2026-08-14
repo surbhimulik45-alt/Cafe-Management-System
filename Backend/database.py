@@ -1,11 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from dotenv import load_dotenv
+import os
 
-DATABASE_URL = "sqlite:///./cafe.db"
+load_dotenv()
 
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./cafe.db")
+
+# PostgreSQL engine (no check_same_thread needed)
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False}
+    pool_pre_ping=True,
+    pool_size=5,
+    max_overflow=10
 )
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)

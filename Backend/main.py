@@ -19,6 +19,7 @@ from routers import (
     auth,
     admin,
     tables,
+    dashboard,
 )
 
 # Create database tables
@@ -51,6 +52,7 @@ app.include_router(offers.router)
 app.include_router(auth.router)
 app.include_router(admin.router)
 app.include_router(tables.router)
+app.include_router(dashboard.router)
 
 # Serve static files
 app.mount("/css", StaticFiles(directory="../Frontend/css"), name="css")
@@ -139,4 +141,9 @@ def invoice_page():
 @app.get("/surprise-page", include_in_schema=False)
 def surprise_page():
     return FileResponse("../Frontend/surprise.html")
+
+@app.get("/customer_dashboard.html", include_in_schema=False)
+@app.get("/dashboard-page", include_in_schema=False)
+def customer_dashboard_page():
+    return FileResponse("../Frontend/customer_dashboard.html")
 
